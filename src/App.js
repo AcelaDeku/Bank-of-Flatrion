@@ -5,6 +5,7 @@ import AddTransaction from './Components/AddTransaction';
 import TableTransaction from './Components/TableTransaction';
 
 function App() {
+    const [searchTerm, setSearchTerm] = useState('');
     const [transactionRecords, setTransactionRecords] = useState([
         { date: "2024-04-01", description: "Grocery shopping", category: "Food", amount: 150.00 },
         { date: "2024-04-03", description: "Monthly subscription", category: "Entertainment", amount: 12.99 },
@@ -14,16 +15,24 @@ function App() {
         { date: "2024-04-10", description: "Textbooks", category: "Education", amount: 120.00 }
     ]);
 
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+    };
+
     const handleAddTransaction = (newTransaction) => {
         setTransactionRecords([...transactionRecords, newTransaction]);
     };
 
+    const filteredTransactions = transactionRecords.filter((transaction) =>
+        transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="App">
             <div className='royaltitle'>The Royal Bank of Flatiron</div>
-            <SearchBox />
+            <SearchBox onSearch={handleSearch} />
             <AddTransaction onAdd={handleAddTransaction} />
-            <TableTransaction records={transactionRecords} />
+            <TableTransaction records={filteredTransactions} />
         </div>
     );
 }

@@ -6,7 +6,7 @@ function SearchBox({ onSearch }) {
     const handleChange = (event) => {
         const { value } = event.target;
         setSearchTerm(value);
- 
+        
         onSearch(value);
     };
 
